@@ -36,20 +36,20 @@ const LandingPage = () => {
               <div className="flex items-center gap-2 text-[13px] text-amber-600 font-semibold bg-amber-100 px-3 py-1 rounded-full border border-amber-300">AI powered</div>
             </div>
 
-            <h1 className="">
+            <h1 className="text-5xl text-black font-medium mb-6 leading-tight">
               Ace Interviews with <br />
-              <span className="">AI-Powered</span> Learning
+              <span className="text-transparent bg-clip-text bg-[radial-gradient(circle,_#FF9324_0%,_#FCD760_100%)] bg-[length:200%_200%] animate-text-shine font-semibold">AI-Powered</span> Learning
             </h1>
           </div>
 
-          <div className="">
-            <p className="">
+          <div className="w-full md:w-1/2">
+            <p className="text-[17px] text-gray-900 mr-0 md:mr-20 mb-6">
               Get role-specific questions, expand answers when you need them,
               dive deeper into concepts, and organize everything your way. From
               preparation to mastery - your ultimate interview toolkit is here.
             </p>
 
-            <button className="" onClick={handleCTA}>
+            <button className="bg-black text-sm font-semibold text-white px-7 py-2.5 rounded-full hover:bg-yellow-100 hover:text-black border border-yellow-50 hover:border-yellow-300 transition-colors cursor-pointer" onClick={handleCTA}>
               Get Started
             </button>
           </div>
