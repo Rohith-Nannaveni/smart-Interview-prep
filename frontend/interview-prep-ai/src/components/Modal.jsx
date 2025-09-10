@@ -8,18 +8,18 @@ const Modal = ({ children, isOpen, onClose, title, hideHeader }) => {
     >
         {/* Modal Header */}
         {!hideHeader && (
-            <div className="">
-                <h3 className="">{title}</h3>
+            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <h3 className="md:text-lg font-medium text-gray-900">{title}</h3>
             </div>
         )}
 
         <button
             type="button"
-            className=""
+            className="text-gray-400 bg-transparent hover:bg-orange-100 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center absolute top-3.5 right-3.5 cursor-pointer"
             onClick={onClose}
         >
             <svg
-                className=""
+                className="w-3 h-3"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -37,7 +37,7 @@ const Modal = ({ children, isOpen, onClose, title, hideHeader }) => {
 
         {/* Modal Body Scrollable */}
 
-        <div className="">
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
             {children}
         </div>
     </div>
