@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
+import { validateEmail } from "../../utils/helper";
 
 const Login = ({ setcurrentPage }) => {
   const [email, setEmail] = useState("");
@@ -61,7 +62,7 @@ const Login = ({ setcurrentPage }) => {
           type="password"
         />
 
-        {error && <p className="text-red-500 text-xs pb-2.5">{}error</p>}
+        {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
         <button type="submit" className="btn-primary">
           LOGIN
