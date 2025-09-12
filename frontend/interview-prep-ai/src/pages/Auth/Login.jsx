@@ -12,6 +12,29 @@ const Login = ({ setcurrentPage }) => {
   // Handle login form submit
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if(!validateEmail(email)){
+      setError("please enter a valid Email Address.");
+      return;
+    }
+
+    if(!password){
+      setError("Please enter the password");
+      return;
+    }
+
+    setError("");
+
+    //Login API call
+    try{
+    } catch(error){
+      if(error.response && error.response.data.message){
+        setError(error.response.data.message);
+      }
+      else{
+        setError("Something went wrong, please try again.");
+      }
+    }
   };
 
   return (
