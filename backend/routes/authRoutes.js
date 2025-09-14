@@ -9,4 +9,14 @@ router.post("/register", registerUser); // for user registration
 router.post("/login", loginUser);   // User login
 router.get("/profile", protect, getUserProfile); // get user profile
 
+router.post("/upload-image", upload.single("image"), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: " No Image Uploaded" });
+    }
+
+    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename
+        }`;
+    res.status(200).json({ imageUrl });
+});
+
 module.exports = router;
