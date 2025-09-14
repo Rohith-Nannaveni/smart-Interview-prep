@@ -7,6 +7,6 @@ const router = express.Router()
 // Auth Routes
 router.post("/register", registerUser); // for user registration
 router.post("/login", loginUser);   // User login
-router.get("/profile", getUserProfile); // get user profile
+router.get("/profile", protect, getUserProfile); // get user profile
 
 module.exports = router;
