@@ -53,6 +53,32 @@ const registerUser = async (req, res) => {
 // @access public
 
 const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(500).json({ message: "User Doesnot Exists" });
+        }
+
+        //password comparison
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(500).json({ message: "Incorrect Password" });
+        }
+
+        // return user data with JWT
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            profileImageUrl: user.profileImageUrl,
+            token: generateToken(user._id)
+        });
+    }
+    catch (error) {
+        res.status(401).json({ message: "Server Error", error: error.message });
+    }
 };
 
 // @desc get User Profile
