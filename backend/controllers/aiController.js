@@ -24,5 +24,7 @@ const generateInterviewQuestions = async(req,res) => {
 // @access Private
 
 const generateConceptExplanation = async(req,res) =>{
-    
+
 }
+
+module.exports = { generateInterviewQuestions,generateConceptExplanation }
