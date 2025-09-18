@@ -38,15 +38,24 @@ const conceptExplainPrompt = (question) => `
     - Explain the following interview question and its concept in depth as if you are teaching a beginner.
     - Question: ${question}
     - After the explanation provide a short and clear title that summarizes the concept for the article or the page header.
-    - If the explanation needs a code example, add a small block of code.
+    - If the explanation needs a code example, include it as a separate JSON object with "language" and "content".
     - Keep formatting clear and easy to read.
     - Return a valid JSON object in the following format:
     {
-        "title":"Short title here?",
-        "explanation":"Explanation here"
+    "title": "Short title here",
+    "explanation": "Detailed beginner-friendly explanation here...",
+    "code": {
+        "language": "javascript",
+        "content": "Optional code example here"
+        }
     }
 
     Important: Do NOT add any extra text outside the JSON format. Only return valid JSON.
+    Rules:
+    - If no code is needed, set "code" to null.
+    - Do NOT add extra commentary, markdown, or text outside of the JSON.
+    - Make sure the output is always valid JSON.
+    
     `;
 
 module.exports = { questionAnswerPrompt, conceptExplainPrompt };
