@@ -8,17 +8,25 @@ const questionAnswerPrompt = (role, experience, topicToFocus, numberOfQuestions)
     - Focus topic: ${topicToFocus}
     - Write ${numberOfQuestions} interview questions.
     - For each question, provide a detailed but beginner friendly answer.
-    - If the answer needs a code example, add a small block of code.
+    - If an answer needs a code example, include it inside the answer as plain text OR add a separate "code" object (see output format).
     - Keep formatting clear and easy to read.
-    - Return a pure JSON like:
+    - Adjust the difficulty of questions to match a ${experience} year candidate.
+    - Keep answers between 4–8 sentences unless a code example is needed.
+    - DO NOT use Markdown code fences (\`\`\`) anywhere in the output.
+    - Return ONLY valid JSON (no extra text before/after).
+
+    Output format (must be exactly this):
     [
-        {
-            "question": "Question text",
-            "answer": "Detailed answer text"
-        },
-        ...
+    {
+        "question": "string",
+        "answer": "string (no markdown fences)",
+        "code": {                  // optional
+            "language": "javascript",
+            "content": "console.log('hello')"
+        }
+    },
+    ...
     ]
-    
     Important: Do NOT add any extra text. Only return valid JSON
     `
 );
