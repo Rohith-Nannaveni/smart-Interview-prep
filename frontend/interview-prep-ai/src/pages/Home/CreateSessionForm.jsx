@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
+import SpinnerLoader from "../../components/Loader/SpinnerLoader";
 
 const CreateSessionForm = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ const CreateSessionForm = () => {
     }
 
     setError("");
+    setIsLoading(true);
   };
   return (
     <div className="w-[90vw] md:w-[35vw] p-7 flex flex-col justify-center">
