@@ -6,6 +6,9 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
+import moment from "moment";
+import SummaryCard from "../../components/Cards/SummaryCard";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -72,7 +75,7 @@ const Dashboard = () => {
         </button>
       </div>
 
-      <Modal
+      {/* <Modal
         isOpen={openCreateModal}
         onClose={() => setOpenCreateModal(false)}
         hideHeader
@@ -93,7 +96,7 @@ const Dashboard = () => {
             onDelete={() => deleteSession(openDeleteAlert?.data)}
           />
         </div>
-      </Modal>
+      </Modal> */}
     </DashboardLayout>
   );
 };
