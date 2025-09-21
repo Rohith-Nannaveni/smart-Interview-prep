@@ -59,8 +59,8 @@ const InterviewPrep = () => {
         questions={sessionData?.questions?.length || "-"}
         description={sessionData?.description || ""}
         lastUpdated={
-          sessionData?.UpdatedAt
-          ? moment(sessionData?.UpdatedAt).format("Do MMM YYY")
+          sessionData?.updatedAt
+          ? moment(sessionData?.updatedAt).format("Do MMM YYYY")
           : ""
         }
       />  
