@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
 import SpinnerLoader from "../../components/Loader/SpinnerLoader";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
 
 const CreateSessionForm = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +28,7 @@ const CreateSessionForm = () => {
   const handleCreateSession = async (e) => {
     e.preventDefault();
 
-    const { role, experience, topicsToFocus } = formData;
+    const { role, experience, topicsToFocus, description } = formData;
 
     if (!role || !experience || !topicsToFocus) {
       setError("Please fill in all required fields.");
@@ -35,7 +37,101 @@ const CreateSessionForm = () => {
 
     setError("");
     setIsLoading(true);
+
+    try {
+      // Calling AI API to generate questions (for a new session)
+      console.log("Calling AI API with data:", {
+        role,
+        experience,
+        topicsToFocus,
+        numberOfQuestions: 10,
+      });
+
+      const aiResponse = await axiosInstance.post(
+        API_PATHS.AI.GENERATE_QUESTIONS,
+        {
+          role,
+          experience,
+          topicToFocus: topicsToFocus,
+          numberOfQuestions: 10,
+        }
+      );
+
+      console.log("AI Response received:", aiResponse);
+
+      // error handling for JSON parsing
+      let generatedQuestions;
+      try {
+        // to Check if aiResponse.data is already parsed or needs parsing
+        if (typeof aiResponse.data === 'string') {
+          generatedQuestions = JSON.parse(aiResponse.data);
+        } else {
+          generatedQuestions = aiResponse.data;
+        }
+      } catch (parseError) {
+        console.error("Failed to parse AI response:", parseError);
+        setError("Failed to generate questions. Please try again.");
+        return;
+      }
+
+      console.log("Generated Questions from AI:", generatedQuestions);
+
+      // Validate that generatedQuestions is an array
+      if (!Array.isArray(generatedQuestions)) {
+        console.error("Generated questions is not an array:", generatedQuestions);
+        setError("Invalid questions format received. Please try again.");
+        return;
+      }
+
+      console.log("Creating session with data:", {
+        role,
+        experience,
+        topicsToFocus,
+        description,
+        questions: generatedQuestions,
+      });
+
+      const response = await axiosInstance.post(API_PATHS.SESSION.CREATE, {
+        role,
+        experience,
+        topicsToFocus,
+        description,
+        questions: generatedQuestions,
+      });
+
+      console.log("Session creation response:", response);
+
+      if (response.data?.session?._id) {
+        console.log("Navigating to:", `/interview-prep/${response.data?.session?._id}`);
+        navigate(`/interview-prep/${response.data?.session?._id}`);
+      } else {
+        console.error("No session ID in response:", response.data);
+        setError("Session created but no ID returned. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating session:", error);
+      console.error("Error details:", {
+        message: error.message,
+        response: error.response,
+        request: error.request,
+        stack: error.stack
+      });
+      
+      if (error.response) {
+        console.error("Response error:", error.response.status, error.response.data);
+        setError(error.response.data?.message || `Server error: ${error.response.status}`);
+      } else if (error.request) {
+        console.error("Network error:", error.request);
+        setError("Network error. Please check your connection and try again.");
+      } else {
+        console.error("Unknown error:", error.message);
+        setError("Something went wrong. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <div className="w-[90vw] md:w-[35vw] p-7 flex flex-col justify-center">
       <h3 className="text-lg font-semibold text-black">
@@ -59,7 +155,7 @@ const CreateSessionForm = () => {
           value={formData.experience}
           onChange={({ target }) => handleChange("experience", target.value)}
           label="Years of Experience"
-          placeholder="(e.g., 1 year, 3 years, 5+ years)"
+          placeholder="(e.g., 1, 3, 5)"
           type="number"
         />
 
