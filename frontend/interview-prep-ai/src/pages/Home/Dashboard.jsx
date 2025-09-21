@@ -8,6 +8,8 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
 import SummaryCard from "../../components/Cards/SummaryCard";
+import CreateSessionForm from "./CreateSessionForm";
+import Modal from "../../components/Modal";
 
 
 const Dashboard = () => {
@@ -75,7 +77,7 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* <Modal
+      <Modal
         isOpen={openCreateModal}
         onClose={() => setOpenCreateModal(false)}
         hideHeader
@@ -96,7 +98,7 @@ const Dashboard = () => {
             onDelete={() => deleteSession(openDeleteAlert?.data)}
           />
         </div>
-      </Modal> */}
+      </Modal>
     </DashboardLayout>
   );
 };
