@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from "react";
+import { LuChevronDown, LuPin, LuPinOff, LuSparkles } from "react-icons/lu";
 
-const QuestionCard = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const QuestionCard = ({
+  question,
+  answer,
+  onLearnMore,
+  isPinned,
+  onTogglePin,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [height, setHeight] = useState(0);
+  const contentRef = useRef(null);
 
-export default QuestionCard
+  useEffect(() => {
+    if (isExpanded) {
+      const contentHeight = contentRef.current.scrollHeight;
+      setHeight(contentHeight + 10);
+    } else {
+      setHeight(0);
+    }
+  }, [isExpanded]);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  }
+  return 
+};
+
+export default QuestionCard;
