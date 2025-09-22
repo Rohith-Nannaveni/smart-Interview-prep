@@ -39,7 +39,23 @@ const InterviewPrep = () => {
 
   const generateConceptExplanation = async (question) => {};
 
-  const toggleQuestionPinStatus = async (questionId) => {};
+  const toggleQuestionPinStatus = async (questionId) => {
+    try{
+      const response = await axiosInstance.post(
+        API_PATHS.QUESTION.PIN(questionId)
+      );
+
+      console.log(response);
+
+      if(response.data && response.data.question){
+        //toast.success('Question pinned succesfully)
+        fetchSessionDetailsbyId();
+      }
+    }catch(error){
+      console.log("Error: ",error);
+    }
+
+  };
 
   const uploadMoreQuestions = async () => {};
 
