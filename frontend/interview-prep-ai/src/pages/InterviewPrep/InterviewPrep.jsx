@@ -10,6 +10,8 @@ import RoleInfoHeader from "./components/RoleInfoHeader";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import QuestionCard from "../../components/Cards/QuestionCard";
+import Drawer from "../../components/Drawer";
+import SkeletonLoader from "../../components/Loader/SkeletonLoader";
 
 const InterviewPrep = () => {
   const { sessionId } = useParams();
@@ -37,7 +39,33 @@ const InterviewPrep = () => {
     }
   };
 
-  const generateConceptExplanation = async (question) => {};
+  const generateConceptExplanation = async (question) => {
+    try{
+      setErrorMsg("");
+      setExplanation(null);
+
+      setIsLoading(true);
+      setOpenLeanMoreDrawer(true);
+
+      const response = await axiosInstance.post(
+        API_PATHS.AI.GENERATE_EXPLANATION,
+        {
+          question,
+        }
+      );
+
+      if(response.data){
+        setExplanation(response.data);
+      }
+    } catch(error){
+      setExplanation(null);
+      setErrorMsg("Failed to generate Explanation, please try again later");
+      console.error("Error: ",error);
+    }
+    finally{
+      setIsLoading(false);
+    }
+  };
 
   const toggleQuestionPinStatus = async (questionId) => {
     try{
@@ -48,7 +76,7 @@ const InterviewPrep = () => {
       console.log(response);
 
       if(response.data && response.data.question){
-        //toast.success('Question pinned succesfully)
+        toast.success('Question pinned succesfully')
         fetchSessionDetailsbyId();
       }
     }catch(error){
@@ -143,7 +171,9 @@ const InterviewPrep = () => {
             </AnimatePresence>
           </div>
         </div>
-        {/* <div>
+
+         {/* For learn more button */}
+        <div>
           <Drawer
             isOpen={openLeanMoreDrawer}
             onClose={() => setOpenLeanMoreDrawer(false)}
@@ -160,7 +190,7 @@ const InterviewPrep = () => {
               <AIResponsePreview content={explanation?.explanation} />
             )}
           </Drawer>
-        </div> */}
+        </div>
       </div>
     </DashboardLayout>
   );
