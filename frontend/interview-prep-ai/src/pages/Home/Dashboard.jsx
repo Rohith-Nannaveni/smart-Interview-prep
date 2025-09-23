@@ -10,6 +10,7 @@ import moment from "moment";
 import SummaryCard from "../../components/Cards/SummaryCard";
 import CreateSessionForm from "./CreateSessionForm";
 import Modal from "../../components/Modal";
+import DeleteContentAlert from "../../components/DeleteContentAlert";
 
 
 const Dashboard = () => {
