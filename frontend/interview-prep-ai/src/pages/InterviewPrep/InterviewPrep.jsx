@@ -148,7 +148,7 @@ const InterviewPrep = () => {
                         onTogglePin={() => toggleQuestionPinStatus(data._id)}
                       />
 
-                      {/* {!isLoading &&
+                      {!isLoading &&
                         sessionData?.questions?.length == index + 1 && (
                           <div className="flex items-center justify-center mt-5">
                             <button
@@ -164,7 +164,7 @@ const InterviewPrep = () => {
                               Load More
                             </button>
                           </div>
-                        )} */}
+                        )}
                     </>
                   </motion.div>
                 );
