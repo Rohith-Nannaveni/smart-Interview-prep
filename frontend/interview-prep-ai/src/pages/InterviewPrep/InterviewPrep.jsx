@@ -41,7 +41,7 @@ const InterviewPrep = () => {
   };
 
   const generateConceptExplanation = async (question) => {
-    try{
+    try {
       setErrorMsg("");
       setExplanation(null);
 
@@ -55,38 +55,75 @@ const InterviewPrep = () => {
         }
       );
 
-      if(response.data){
+      if (response.data) {
         setExplanation(response.data);
       }
-    } catch(error){
+    } catch (error) {
       setExplanation(null);
       setErrorMsg("Failed to generate Explanation, please try again later");
-      console.error("Error: ",error);
-    }
-    finally{
+      console.error("Error: ", error);
+    } finally {
       setIsLoading(false);
     }
   };
 
   const toggleQuestionPinStatus = async (questionId) => {
-    try{
+    try {
       const response = await axiosInstance.post(
         API_PATHS.QUESTION.PIN(questionId)
       );
 
       console.log(response);
 
-      if(response.data && response.data.question){
+      if (response.data && response.data.question) {
         // toast.success('Question pinned succesfully')
         fetchSessionDetailsbyId();
       }
-    }catch(error){
-      console.log("Error: ",error);
+    } catch (error) {
+      console.log("Error: ", error);
     }
-
   };
 
-  const uploadMoreQuestions = async () => {};
+  const uploadMoreQuestions = async () => {
+    try {
+      setIsUpdateLoader(true);
+
+      // Call AI API to generate questions
+      const aiResponse = await axiosInstance.post(
+        API_PATHS.AI.GENERATE_QUESTIONS,
+        {
+          role: sessionData?.role,
+          experience: sessionData?.experience,
+          topicToFocus: sessionData?.topicsToFocus,
+          numberOfQuestions: 10,
+        }
+      );
+
+      // Should be array like [{question, answer}, ...]
+      const generatedQuestions = aiResponse.data;
+
+      const response = await axiosInstance.post(
+        API_PATHS.QUESTION.ADD_TO_SESSION,
+        {
+          sessionId,
+          questions: generatedQuestions,
+        }
+      );
+
+      if (response.data) {
+        toast.success("Added More Q & A!!");
+        fetchSessionDetailsbyId();
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setErrorMsg(error.response.data.message);
+      } else {
+        setErrorMsg("Something went wrong. Please try again.");
+      }
+    } finally {
+      setIsUpdateLoader(false);
+    }
+  };
 
   useEffect(() => {
     if (sessionId) {
@@ -173,7 +210,7 @@ const InterviewPrep = () => {
           </div>
         </div>
 
-         {/* For learn more button */}
+        {/* For learn more button */}
         <div>
           <Drawer
             isOpen={openLeanMoreDrawer}
