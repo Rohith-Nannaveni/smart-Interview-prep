@@ -77,7 +77,7 @@ const InterviewPrep = () => {
       console.log(response);
 
       if(response.data && response.data.question){
-        toast.success('Question pinned succesfully')
+        // toast.success('Question pinned succesfully')
         fetchSessionDetailsbyId();
       }
     }catch(error){
