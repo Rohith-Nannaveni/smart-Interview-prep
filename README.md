@@ -26,3 +26,54 @@ An AI-powered MERN stack app for interview preparation. It generates role-based 
 ```bash
 git clone https://github.com/Rohith-Nannaveni/smart-Interview-prep.git
 cd smart-Interview-prep
+```
+
+### 2. Install dependencies
+```bash
+# Backend
+cd backend
+npm install
+
+# Frontend
+cd ../frontend/interview-prep-ai
+npm install
+
+```
+### 3. Environment variables
+```bash
+# create a .env file in backend
+PORT=5000
+MONGO_URI=your_mongo_connection
+GEMINI_API_KEY=your_api_key
+
+```
+
+### 4. Run it
+```bash
+# Start backend
+cd backend
+npm run dev
+
+# Start frontend
+cd ../frontend/interview-prep-ai
+npm run dev
+
+```
+
+### Project Structure
+```bash
+smart-Interview-prep/
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── app.js
+│   └── ...
+├── frontend/
+│   └── interview-prep-ai/
+│       ├── src/
+│       ├── public/
+│       └── ...
+├── .gitignore
+└── README.md
+```
