@@ -60,6 +60,12 @@ npm run dev
 
 ```
 
+### 5. Live preview
+```bash
+# In the terminal Start both frontend and backend servers in two powershells
+then open http://localhost:5173/ for the live view of the project
+```
+
 ### Project Structure
 ```bash
 smart-Interview-prep/
