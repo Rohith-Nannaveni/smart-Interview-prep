@@ -27,7 +27,7 @@ const generateInterviewQuestions = async (req, res) => {
         const prompt = questionAnswerPrompt(role, experience, topicToFocus, numberOfQuestions);
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash-exp',
+            model: 'gemini-3.8-flash',
             contents: prompt,
         });
 
