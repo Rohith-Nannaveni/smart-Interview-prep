@@ -65,7 +65,7 @@ const generateConceptExplanation = async (req, res) => {
         const prompt = conceptExplainPrompt(question);
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.0-flash-exp',
+            model: 'gemini-3.8-flash',
             contents: prompt,
         });
         let rawText = response.text;
